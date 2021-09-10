@@ -7,10 +7,11 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.NoResultException;
-import javax.persistence.PersistenceException;
+import javax.transaction.Transactional;
 import java.util.List;
 
 @Service
+@Transactional
 public class UserServiceImpl implements UserService {
     private final UserDao userDao;
     private final PasswordEncoder passwordEncoder;
@@ -39,7 +40,11 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void updateUser(User user) {
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
+
+        // если пароль юзера был изменен, зашифруем его
+        if (!user.getPassword().equals(userDao.getUserById(user.getId()).getPassword())) {
+            user.setPassword(passwordEncoder.encode(user.getPassword()));
+        }
         userDao.updateUser(user);
     }
 

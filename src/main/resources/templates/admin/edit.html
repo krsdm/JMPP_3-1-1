@@ -24,7 +24,7 @@
         </p>
         <p>
             <label for="password">Password</label><br/>
-            <input type="password" th:field="*{password}" id="password"/>
+            <input type="text" th:field="*{password}" id="password"/>
             <label style="color:red" th:if="${#fields.hasErrors('password')}" th:utext="${#fields.errors('password').get(0)}">Pass Error</label>
         </p>
         <p>

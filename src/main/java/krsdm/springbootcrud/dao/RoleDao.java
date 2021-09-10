@@ -1,6 +1,5 @@
 package krsdm.springbootcrud.dao;
 
-
 import krsdm.springbootcrud.models.Role;
 
 import java.util.List;

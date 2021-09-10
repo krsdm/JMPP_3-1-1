@@ -8,8 +8,10 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.NoResultException;
+import javax.transaction.Transactional;
 
 @Service
+@Transactional
 public class UserDetailsServiceImpl implements UserDetailsService {
     private final UserDao userDao;
 

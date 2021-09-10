@@ -19,16 +19,14 @@ import java.util.stream.Collectors;
 public class AdminController {
     private final UserService userService;
     private final RoleService roleService;
-    private final PasswordEncoder passwordEncoder;
 
     @Autowired
-    AdminController(UserService userService, RoleService roleService, PasswordEncoder passwordEncoder) {
+    AdminController(UserService userService, RoleService roleService) {
         this.userService = userService;
         this.roleService = roleService;
-        this.passwordEncoder = passwordEncoder;
     }
 
-    @GetMapping()
+    @GetMapping
     public String userList(Model model) {
         model.addAttribute("users", userService.getAllUsers());
         return "admin/users";
@@ -74,9 +72,7 @@ public class AdminController {
 
     @GetMapping("{id}/edit")
     public String editUser(@PathVariable("id") long id, Model model) {
-        User user = userService.getUserById(id);
-        user.setPassword(null);
-        model.addAttribute("user", user);
+        model.addAttribute("user", userService.getUserById(id));
         model.addAttribute("roles", roleService.getRoles());
         return "admin/edit";
     }
@@ -89,15 +85,6 @@ public class AdminController {
             model.addAttribute("roles", roleService.getRoles());
             return "admin/edit";
         }
-
-/*
-        // Если ввели не верный пароль, попросим вспомнить
-        if (!passwordEncoder.matches(user.getPassword(), userService.getUserById(user.getId()).getPassword())) {
-            bindingResult.addError(new FieldError("password", "password", "Wrong password!"));
-            model.addAttribute("roles", roleService.getRoles());
-            return "admin/edit";
-        }
-*/
 
         // Если изменили имя и юзер с таким именем уже существует, сообщим об этом
         if (!user.getName().equals(userService.getUserById(user.getId()).getName()) && userService.getUserByName(user.getName()) != null) {
