@@ -1,5 +1,6 @@
 package krsdm.springbootcrud.models;
 
+import lombok.Data;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 import org.springframework.security.core.GrantedAuthority;
@@ -12,6 +13,7 @@ import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
+@Data
 @Entity
 @Table(name = "users")
 public class User implements UserDetails {
@@ -48,105 +50,9 @@ public class User implements UserDetails {
     @Size(min = 1, message = "Select at least one role")
     private Set<Role> roles = new HashSet<>();
 
-    public User() {
-
-    }
-
-    public User(String name, String surname, String password, Integer age, String email, Set<Role> roles) {
-        this.name = name;
-        this.surname = surname;
-        this.password = password;
-        this.age = age;
-        this.email = email;
-        this.roles = roles;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public long getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getSurname() {
-        return surname;
-    }
-
-    public void setSurname(String surname) {
-        this.surname = surname;
-    }
-
-    public Integer getAge() {
-        return age;
-    }
-
-    public void setAge(Integer age) {
-        this.age = age;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public Set<Role> getRoles() {
-        return roles;
-    }
-
-    public void setRoles(Set<Role> roles) {
-        this.roles = roles;
-    }
-
-    public void addRole(Role role) {
-        roles.add(role);
-    }
-
-    @Override
-    public String toString() {
-        return "User{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", surname='" + surname + '\'' +
-                ", age=" + age +
-                ", email='" + email + '\'' +
-                '}';
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        User user = (User) o;
-        return name.equals(user.name) && Objects.equals(surname, user.surname) && password.equals(user.password) && email.equals(user.email) && Objects.equals(age, user.age) && roles.equals(user.roles);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(name, surname, password, email, age, roles);
-    }
-
-
-    /*  implement UserDetails  */
+//    public User() {
+//
+//    }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
