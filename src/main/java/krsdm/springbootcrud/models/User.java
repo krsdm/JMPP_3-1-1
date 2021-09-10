@@ -10,7 +10,6 @@ import javax.persistence.*;
 import javax.validation.constraints.*;
 import java.util.Collection;
 import java.util.HashSet;
-import java.util.Objects;
 import java.util.Set;
 
 @Data
@@ -49,10 +48,6 @@ public class User implements UserDetails {
     )
     @Size(min = 1, message = "Select at least one role")
     private Set<Role> roles = new HashSet<>();
-
-//    public User() {
-//
-//    }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
